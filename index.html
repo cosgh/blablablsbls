@@ -366,54 +366,6 @@
 
 
 
-  <!-- Loading Screen -->
-  <div id="loading-screen">
-    <img id="loading-logo" src="transparent_logo_black.png" alt="Loading Logo" />
-  </div>
-
-
-  <script>
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        const logo = document.getElementById('loading-logo');
-        const screen = document.getElementById('loading-screen');
-        const main = document.querySelector('main');
-
-        logo.classList.add('active');
-        screen.classList.add('active');
-
-  
-
-        // ✅ Fully remove loader after animations finish
-        setTimeout(() => {
-                    screen.remove();
-         // main.style.display = "block"; // show page content -->
-        }, 2500);
-      }, 200); // small delay to reduce snap-on-load
-    });
-  </script>
-
-
-
-
-
-
-<script>
-setTimeout(function () {
-  // Remove the cover
-  var cover = document.getElementById('page-cover');
-  if (cover) cover.parentNode.removeChild(cover);
-
-  // Optionally, show your sections (if you had them hidden)
-  document.querySelectorAll('.page-section').forEach(function(section) {
-    section.style.display = 'block';
-  });
-
-}, 1200);
-</script>
-
-
-
 
 
 
