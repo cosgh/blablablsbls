@@ -36,7 +36,7 @@
 }
 
 #loading-logo {
-  max-width: 200px;
+  max-width: 450px;
   opacity: 0;
   transform: scale(0.75);
 }
@@ -67,6 +67,7 @@
     visibility: hidden;
   }
 }
+
 
 
 
@@ -346,7 +347,18 @@
 
 
 
+/* Hide all page sections by default */
+.page-section {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+}
 
+/* Show sections when loaded */
+.page-section.loaded {
+  opacity: 1;
+  visibility: visible;
+}
 
 
 
@@ -380,6 +392,14 @@
         screen.remove();
       }, 2500); // 0.2s wait + 2.1s total animation = 2.5s
     }, 200); // wait 0.2s before even starting
+    
+    // Show all page sections after 1.5 seconds
+    setTimeout(() => {
+      const sections = document.querySelectorAll('.page-section');
+      sections.forEach(section => {
+        section.classList.add('loaded');
+      });
+    }, 1500); // Show sections after 1.5 seconds
   });
 </script>
 
@@ -443,9 +463,7 @@
 
 
 
- 
 
-<!-- ——————————————————————  Game Hub Section  —————————————————————— -->
 <section id="game-hub" class="pt-40 pb-6 bg-white text-center mt-40 page-section">
   <div class="max-w-lg mx-auto flex flex-col items-center space-y-10">
 
@@ -500,7 +518,7 @@
 
 <!-- CLICK TO OPNE ONLY ONE-->
 
-<section id="game-preview" class="py-20 bg-white text-center ">
+<section id="game-preview" class="py-20 bg-white text-center  page-section">
   <h2 class="text-3xl font-extrabold mb-10 tracking-tight page-section">GAME PREVIEW</h2>
   <div class="flex flex-col gap-6 items-center">
     <div class="transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
@@ -1477,6 +1495,8 @@ function updateScreenshotHover() {
 
 
 
+
+</div>
 
 
 </body>
