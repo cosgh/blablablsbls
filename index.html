@@ -36,7 +36,7 @@
 }
 
 #loading-logo {
-  max-width: 450px;
+  max-width: 390px;
   opacity: 0;
   transform: scale(0.75);
 }
@@ -416,52 +416,6 @@
 
 
 
-
-
-
-
-
-<!-- UPDATE PAGE BACKGROUND COLOR -->
-
-<!--
-<script>
-  function updateBackgroundByScroll() {
-    const scrollTop = window.scrollY || window.pageYOffset;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollPercent = scrollTop / docHeight;
-
-  if (!isMobile()) {
-  // ✅ Desktop logic
-  document.body.style.backgroundColor = scrollPercent > 0.8 ? "black" : "white";
-} else {
-  // ✅ Mobile logic
-  if (CURRENTSTATE === 'normal') {
-    document.body.style.backgroundColor = scrollPercent > 0.8 ? "black" : "white";
-  } else {
-    document.body.style.backgroundColor = "white";
-  }
-}
-  }
-
-  // Run on scroll and on page load
-  window.addEventListener('scroll', updateBackgroundByScroll);
-  window.addEventListener('load', updateBackgroundByScroll);
-</script>
-
--->
-
-
-
-
-
-
-
-
-
-
-
-
-
 <section id="game-hub" class="pt-40 pb-6 bg-white text-center mt-40 page-section">
   <div class="max-w-lg mx-auto flex flex-col items-center space-y-10">
 
@@ -510,12 +464,42 @@
 <!-- ———————————————————————————————————————————————————————————— -->
 
 
+<!-- BUTTONS TO SWITCH IMAGE SETS -->
+<div style="text-align:center; margin-top:3rem;">
+  <button onclick="swapPreviewImages(imageSet1)">Show Set 1</button>
+  <button onclick="swapPreviewImages(imageSet2)">Show Set 2</button>
+  <button onclick="swapPreviewImages(imageSet3)">Show Set 3</button>
+</div>
+
+<script>
+  // Image sets: just update with your real file names!
+  const imageSet1 = [
+    "ss_iphone_1.png", "ss_iphone_2.png", "ss_iphone_3.png", "ss_iphone_4.png",
+    "ss_iphone_5.png", "ss_iphone_6.png", "ss_iphone_7.png", "ss_iphone_8.png"
+  ];
+  const imageSet2 = [
+  "ss_white.png", "ss_white.png", "ss_white.png", "ss_white.png",
+  "ss_white.png", "ss_white.png", "ss_white.png", "ss_white.png"
+];
+  const imageSet3 = [
+  "ss_white.png", "ss_white.png", "ss_white.png", "ss_white.png",
+  "ss_white.png", "ss_white.png", "ss_white.png", "ss_white.png"
+];
+
+  function swapPreviewImages(images) {
+    // Select all images inside the game-preview section, in order
+    const imgNodes = document.querySelectorAll('#game-preview img');
+    imgNodes.forEach((img, i) => {
+      if(images[i]) {
+        img.src = images[i];
+        img.alt = "Screenshot " + (i+1);
+      }
+    });
+  }
+</script>
 
 
-
-
-<!-- CLICK TO OPNE ONLY ONE-->
-
+<!-- CLICK TO OPNE ONLY ONE --------------- AUTOSPORT MOBILE --------->
 <section id="game-preview" class="py-20 bg-white text-center  page-section">
   <h2 class="text-3xl font-extrabold mb-10 tracking-tight page-section">GAME PREVIEW</h2>
   <div class="flex flex-col gap-6 items-center">
@@ -650,135 +634,9 @@ function isMobile() {
 
 
 
-<!-- CLICK TO OPEN A VERTICAL SCROLLABLE CAROUSEL 
-<section id="game-preview" class="py-20 bg-white text-center">
-  <h2 class="text-3xl font-extrabold mb-10 tracking-tight page-section">GAME PREVIEW</h2>
-  <div class="flex flex-col gap-6 items-center">
-    <div class="transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
-      <img src="ss_iphone_1.png" alt="Screenshot 1"
-           class="ss-rounded shadow-xl object-cover clickable-ss"
-           style="width: 90vw; max-width: 1100px; aspect-ratio: 19.5 / 9;" />
-    </div>
-    <div class="transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
-      <img src="ss_iphone_2.png" alt="Screenshot 2"
-           class="ss-rounded shadow-xl object-cover clickable-ss"
-           style="width: 90vw; max-width: 1100px; aspect-ratio: 19.5 / 9;" />
-    </div>
-    <div class="transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
-      <img src="ss_iphone_3.png" alt="Screenshot 3"
-           class="ss-rounded shadow-xl object-cover clickable-ss"
-           style="width: 90vw; max-width: 1100px; aspect-ratio: 19.5 / 9;" />
-    </div>
-    <div class="transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
-      <img src="ss_iphone_4.png" alt="Screenshot 4"
-           class="ss-rounded shadow-xl object-cover clickable-ss"
-           style="width: 90vw; max-width: 1100px; aspect-ratio: 19.5 / 9;" />
-    </div>
-    <div class="transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
-      <img src="ss_iphone_5.png" alt="Screenshot 5"
-           class="ss-rounded shadow-xl object-cover clickable-ss"
-           style="width: 90vw; max-width: 1100px; aspect-ratio: 19.5 / 9;" />
-    </div>
-    <div class="transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
-      <img src="ss_iphone_6.png" alt="Screenshot 6"
-           class="ss-rounded shadow-xl object-cover clickable-ss"
-           style="width: 90vw; max-width: 1100px; aspect-ratio: 19.5 / 9;" />
-    </div>
-    <div class="transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
-      <img src="ss_iphone_7.png" alt="Screenshot 7"
-           class="ss-rounded shadow-xl object-cover clickable-ss"
-           style="width: 90vw; max-width: 1100px; aspect-ratio: 19.5 / 9;" />
-    </div>
-    <div class="transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
-      <img src="ss_iphone_8.png" alt="Screenshot 8"
-           class="ss-rounded shadow-xl object-cover clickable-ss"
-           style="width: 90vw; max-width: 1100px; aspect-ratio: 19.5 / 9;" />
-    </div>
-  </div>
-</section>
 
-<!-- VERTICAL SCROLLABLE FULLSCREEN CAROUSEL 
-<div id="fullscreenOverlay" style="
-  display: none;
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: white;
-  z-index: 9999;
-  overflow-y: auto;
-  padding: 2rem 0;
-  align-items: start;
-  justify-content: flex-start;
-">
-  <button id="closeOverlay" aria-label="Close carousel" style="
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    background: transparent;
-    border: none;
-    font-size: 3rem;
-    cursor: pointer;
-    color: #333;
-    z-index: 10000;
-  ">&times;</button>
-  <div id="carouselContainer" style="
-    display: flex;
-    flex-direction: column;
-    gap: 2.25rem;
-    align-items: center;
-    padding-top: 4rem;
-    padding-bottom: 4rem;
-  ">
-  </div>
-</div>
 
-<script>
 
-function isMobile() {
-  return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-}
-
-(() => {
-  const thumbImages = Array.from(document.querySelectorAll('.clickable-ss'));
-  const overlay = document.getElementById('fullscreenOverlay');
-  const carouselContainer = document.getElementById('carouselContainer');
-  const closeBtn = document.getElementById('closeOverlay');
-
-  // Build vertical carousel once
-  let isCarouselBuilt = false;
-  function buildCarousel() {
-    thumbImages.forEach(img => {
-      const clone = img.cloneNode(true);
-      clone.style.width = '90%';
-      clone.style.maxWidth = 'none';
-      carouselContainer.appendChild(clone);
-    });
-    isCarouselBuilt = true;
-  }
-
- thumbImages.forEach(img => {
-  img.addEventListener('click', () => {
-    if (isMobile()) return; // <-- Prevent on mobile!
-    if (!isCarouselBuilt) buildCarousel();
-    overlay.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-  });
-});
-
-  closeBtn.addEventListener('click', () => {
-    overlay.style.display = 'none';
-    document.body.style.overflow = '';
-  });
-
-  // Close if clicked outside button and images
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) {
-      closeBtn.click();
-    }
-  });
-})();
-</script>
-
--->
 <!-- FEATURES SECTION-->
 <section class="bg-white text-gray-900 page-section py-20">
   <div class="max-w-6xl mx-auto px-6 text-center">
@@ -920,6 +778,14 @@ function isMobile() {
 
 
 
+
+
+
+
+
+
+
+
 <!-- DOWNLOAD NOW SECTION-->
 
 <div style="background-color: #f5f5f5;">
@@ -981,6 +847,13 @@ function isMobile() {
 
 
 </div>
+
+
+
+
+
+
+
 
 
 
