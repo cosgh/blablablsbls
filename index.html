@@ -446,7 +446,7 @@
     -->
 
 
-    <h2 class="text-5xl font-extrabold mb-10 tracking-tight">Autosport Mobile</h2>
+    <h2 class="text-5xl font-extrabold mb-5 tracking-tight">Autosport Mobile</h2>
 
 
     <!-- Social icons -->
@@ -462,98 +462,6 @@
   </div>
 </section>
 <!-- ———————————————————————————————————————————————————————————— -->
-
-
-<!-- BUTTONS TO SWITCH IMAGE SETS -->
-<div style="text-align:center; margin-top:3rem;">
-  <button onclick="swapPreviewImages(imageSet1)">Show Set 1</button>
-  <button onclick="swapPreviewImages(imageSet2)">Show Set 2</button>
-  <button onclick="swapPreviewImages(imageSet3)">Show Set 3</button>
-</div>
-
-<script>
-  // Image sets: just update with your real file names!
-  const imageSet1 = [
-    "ss_iphone_1.png", "ss_iphone_2.png", "ss_iphone_3.png", "ss_iphone_4.png",
-    "ss_iphone_5.png", "ss_iphone_6.png", "ss_iphone_7.png", "ss_iphone_8.png"
-  ];
-  const imageSet2 = [
-  "ss_white.png", "ss_white.png", "ss_white.png", "ss_white.png",
-  "ss_white.png", "ss_white.png", "ss_white.png", "ss_white.png"
-];
-  const imageSet3 = [
-  "ss_white.png", "ss_white.png", "ss_white.png", "ss_white.png",
-  "ss_white.png", "ss_white.png", "ss_white.png", "ss_white.png"
-];
-
-  function swapPreviewImages(images) {
-    // Select all images inside the game-preview section, in order
-    const imgNodes = document.querySelectorAll('#game-preview img');
-    imgNodes.forEach((img, i) => {
-      if(images[i]) {
-        img.src = images[i];
-        img.alt = "Screenshot " + (i+1);
-      }
-    });
-  }
-</script>
-
-
-
-
-
-<script>
-
-const allImages = [
-  "ss_black.png",
-  "ss_white.png",
-  "fire_icon.png",
-  "fire_icon - Copy.png",
-  "transparent_logo_black.png",
-  "rotateyourphone.png",
-  "online_viewer_net - Copy.png",
-  "black box.png",
-  "black_logo.png",
-  "black_logo - Copy.png",
-  "icon_final_high_res.png",
-  "ss_iphone_1.png",
-  "ss_iphone_2.png",
-  "ss_iphone_3.png",
-  "ss_iphone_4.png",
-  "ss_iphone_5.png",
-  "ss_iphone_6.png",
-  "ss_iphone_7.png",
-  "ss_iphone_8.png",
-  "section-bottom.png",
-  "section-top.png",
-  "appstore.png",
-  "google play.png",
-  "googleplay.png",
-  "transparent_logo.png",
-  "footer-down.png"
-];
-allImages.forEach(src => {
-  const img = new Image();
-  img.src = src;
-});
-
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -912,15 +820,6 @@ function isMobile() {
 
 
 
-
-
-
-
-
-
-
-
-
   
   
 <!-- COMUNITY SECTION-->
@@ -1122,7 +1021,7 @@ function isMobile() {
       style="max-width: 280px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);"
     >
       <img
-        src="black box.png"
+        src="ss_white.png"
         alt="Thumbnail"
         style="width: 100%; aspect-ratio: 1 / 1.4; object-fit: cover; border-radius: 0.75rem; margin-bottom: 1rem;"
       />
@@ -1145,7 +1044,7 @@ function isMobile() {
       style="max-width: 280px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);"
     >
       <img
-        src="black box.png"
+        src="ss_white.png"
         alt="Thumbnail"
         style="width: 100%; aspect-ratio: 1 / 1.4; object-fit: cover; border-radius: 0.75rem; margin-bottom: 1rem;"
       />
@@ -1168,7 +1067,7 @@ function isMobile() {
       style="max-width: 280px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);"
     >
       <img
-        src="black box.png"
+        src="ss_white.png"
         alt="Thumbnail"
         style="width: 100%; aspect-ratio: 1 / 1.4; object-fit: cover; border-radius: 0.75rem; margin-bottom: 1rem;"
       />
@@ -1191,7 +1090,7 @@ function isMobile() {
       style="max-width: 280px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);"
     >
       <img
-        src="black box.png"
+        src="ss_white.png"
         alt="Thumbnail"
         style="width: 100%; aspect-ratio: 1 / 1.4; object-fit: cover; border-radius: 0.75rem; margin-bottom: 1rem;"
       />
@@ -1214,24 +1113,114 @@ function isMobile() {
 
 
 
-  <!-- Community Section -->
-  <section id="community" class="py-16 bg-white text-center page-section" aria-label="Community Section">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-3xl font-extrabold text-center mb-12 tracking-tight">JOIN US</h2>
 
-      <nav class="flex justify-center space-x-6 mb-12" aria-label="Social media links">
-        <a href="#" class="text-gray-700 hover:text-red-600 text-3xl focus:outline-none " aria-label="Reddit" tabindex="0"><i class="fab fa-reddit" aria-hidden="true"></i></a>
-        <a href="#" class="text-gray-700 hover:text-blue-600 text-3xl focus:outline-none " aria-label="Twitter" tabindex="0"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-        <a href="#" class="text-gray-700 hover:text-pink-600 text-3xl focus:outline-none " aria-label="Instagram" tabindex="0"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-        <a href="#" class="text-gray-700 hover:text-blue-700 text-3xl focus:outline-none " aria-label="Facebook" tabindex="0"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-        <a href="#" class="text-gray-700 hover:text-red-600 text-3xl focus:outline-none " aria-label="YouTube" tabindex="0"><i class="fab fa-youtube" aria-hidden="true"></i></a>
-        <a href="#" class="text-gray-700 hover:text-purple-600 text-3xl focus:outline-none " aria-label="Discord" tabindex="0"><i class="fab fa-discord" aria-hidden="true"></i></a>
-      </nav>
 
-      </div>
-    </div>
-  </section>
+
+
+
+
+
+
+
+
+
+
+<div class="flex flex-wrap justify-center gap-24 mb-16">
   
+<section id="game-hub" class="pt-40 pb-6 bg-white text-center page-section">
+  <div class="max-w-lg mx-auto flex flex-col items-center space-y-10">
+
+    <!-- Game icon -->
+    <img src="icon_final_high_res.png"
+      alt="Game Icon"
+      class="w-64 h-64 object-cover shadow-xl"
+      style="border-radius: 20%;" />
+
+   
+    <div class="flex flex-row flex-wrap gap-4 items-center justify-center pt-4 pb-4">
+   <!-- Store BADGES 
+      <a href="#" class="block">
+        <img
+        src="appstore.svg"
+          alt="Download on the App Store"
+          class="h-16 w-auto">
+      </a>
+      <a href="#" class="block">
+        <img
+        src="google play.svg"
+          alt="Get it on Google Play"
+          class="h-16 w-auto">
+      </a>
+
+    </div>
+
+    -->
+
+
+    <h2 class="text-5xl font-extrabold mb-5 tracking-tight">Autosport Mobile</h2>
+
+
+    <!-- Social icons -->
+    <div class="flex space-x-8 text-4xl text-gray-800">
+      <a href="#" aria-label="Facebook"  class="hover:text-blue-600"><i class="fab fa-facebook"></i></a>
+      <a href="#" aria-label="Twitch"    class="hover:text-purple-600"><i class="fab fa-twitch"></i></a>
+      <a href="#" aria-label="Discord"   class="hover:text-indigo-500"><i class="fab fa-discord"></i></a>
+      <a href="#" aria-label="Twitter"   class="hover:text-sky-500"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="Instagram" class="hover:text-pink-600"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="YouTube"   class="hover:text-red-600"><i class="fab fa-youtube"></i></a>
+    </div>
+
+  </div>
+</section>
+  
+<section id="game-hub" class="pt-40 pb-6 bg-white text-center page-section">
+  <div class="max-w-lg mx-auto flex flex-col items-center space-y-10">
+
+    <!-- Game icon -->
+    <img src="icon_final_high_res.png"
+      alt="Game Icon"
+      class="w-64 h-64 object-cover shadow-xl"
+      style="border-radius: 20%;" />
+
+   
+    <div class="flex flex-row flex-wrap gap-4 items-center justify-center pt-4 pb-4">
+   <!-- Store BADGES 
+      <a href="#" class="block">
+        <img
+        src="appstore.svg"
+          alt="Download on the App Store"
+          class="h-16 w-auto">
+      </a>
+      <a href="#" class="block">
+        <img
+        src="google play.svg"
+          alt="Get it on Google Play"
+          class="h-16 w-auto">
+      </a>
+
+    </div>
+
+    -->
+
+
+    <h2 class="text-5xl font-extrabold mb-5 tracking-tight">Autosport Mobile</h2>
+
+
+    <!-- Social icons -->
+    <div class="flex space-x-8 text-4xl text-gray-800">
+      <a href="#" aria-label="Facebook"  class="hover:text-blue-600"><i class="fab fa-facebook"></i></a>
+      <a href="#" aria-label="Twitch"    class="hover:text-purple-600"><i class="fab fa-twitch"></i></a>
+      <a href="#" aria-label="Discord"   class="hover:text-indigo-500"><i class="fab fa-discord"></i></a>
+      <a href="#" aria-label="Twitter"   class="hover:text-sky-500"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="Instagram" class="hover:text-pink-600"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="YouTube"   class="hover:text-red-600"><i class="fab fa-youtube"></i></a>
+    </div>
+
+  </div>
+</section>
+</div>
+
+
   
   
   
