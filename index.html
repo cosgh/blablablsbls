@@ -15,14 +15,13 @@
 
  
  
- 
  #loading-screen {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #ffffff;
+  background-color: rgb(255, 255, 255);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -359,8 +358,40 @@
 
 
 
+  
 
 
+
+
+
+
+
+<script>
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const logo = document.getElementById('loading-logo');
+      const screen = document.getElementById('loading-screen');
+
+      logo.classList.add('active');
+      screen.classList.add('active');
+
+      // Remove loader after everything finishes
+      setTimeout(() => {
+        screen.remove();
+      }, 2500); // 0.2s wait + 2.1s total animation = 2.5s
+    }, 200); // wait 0.2s before even starting
+  });
+</script>
+
+
+
+<div id="loading-screen">
+  <img
+    src="transparent_logo_black.png"
+    alt="Loading Logo"
+    id="loading-logo"
+  />
+</div>
 
 
 
@@ -408,17 +439,6 @@
 
 
 
-
-
-
-<div id="page-cover" style="
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  width: 100vw;
-  height: 100vh;
-  background: #fff;
-  z-index: 99999;
-"></div>
 
 
 
