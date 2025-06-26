@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autofest Mobile</title>
+  <script src="assets/tailwind.min.js"></script>
+
+  <link rel="stylesheet" href="assets/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/poppins.css">
+  <style>
+  
+
+ 
+
+
+
+  /* Prevent selection and dragging */
+    * {
+      user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      -moz-user-select: none;
+      cursor: default;
+    }
+
+    img {
+      -webkit-user-drag: none;
+      user-drag: none;
+      user-select: none;
+      -webkit-user-select: none;
+      cursor: default;
+    }
+
+    button, a {
+      cursor: pointer;
+    }
+ 
+ 
+
+
+ 
+ 
+ 
+    :root {
+      --primary-blue: #2a75bb;
+      --accent-gold: #ffcb05;
+      --accent-green: #4caf50;
+      --accent-red: #e53935;
+      --dark-blue: #1a3e72;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #ffffff;
+      color: #333;
+      overflow-x: hidden;
+      line-height: 1.6;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      
+      
+      
+    }
+
+
+
+    .btn-primary {
+      background-color: var(--accent-gold);
+      color: var(--dark-blue);
+      font-weight: 700;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .btn-primary:hover,
+    .btn-primary:focus-visible {
+      transform: scale(1.05);
+      box-shadow: 0 8px 15px rgba(255, 203, 5, 0.3);
+      outline: none;
+    }
+
+    .btn-secondary {
+      background-color: var(--accent-green);
+      color: #fff;
+      font-weight: 700;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .btn-secondary:hover,
+    .btn-secondary:focus-visible {
+      transform: scale(1.05);
+      box-shadow: 0 8px 15px rgba(76, 175, 80, 0.3);
+      outline: none;
+    }
+
+    /* Simplified nav link underline animation */
+    .nav-link {
+      position: relative;
+      cursor: pointer;
+      color: inherit;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 3px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--accent-gold);
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      color: var(--dark-blue);
+      outline: none;
+    }
+    .nav-link:hover::after,
+    .nav-link:focus-visible::after {
+      width: 100%;
+    }
+
+    /* Character and news cards minimal box-shadow and hover lift */
+    .character-card,
+    .news-card {
+      background-color: #fafafa;
+      border-radius: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: default;
+    }
+    .character-card:hover,
+    .character-card:focus-within,
+    .news-card:hover,
+    .news-card:focus-within {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+      outline: none;
+    }
+
+    /* Carousel */
+    .carousel-item {
+      transition: opacity 0.5s ease-in-out;
+      flex-shrink: 0;
+      width: 100%;
+    }
+
+    /* Carousel indicators */
+    .carousel-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 9999px;
+      background-color: rgba(255,255,255,0.5);
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+    .carousel-indicator[aria-selected="true"] {
+      background-color: #fff;
+    }
+
+    /* Floating animation for hero images */
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+    .floating {
+      animation: float 4s ease-in-out infinite;
+    }
+    .floating-delay-1 {
+      animation-delay: 0.6s;
+    }
+    .floating-delay-2 {
+      animation-delay: 1.2s;
+    }
+
+    /* Maintain 16:9 aspect ratio for screenshots images container */
+    .game-carousel-item > img {
+      aspect-ratio: 16 / 9;
+      border-radius: 1rem; /* reinforce rounding */
+    }
+
+    /* Thumbnails under screenshots */
+    .game-thumbnail[aria-pressed="true"] {
+      border-color: #6366f1; /* Indigo-500 from Tailwind */
+      box-shadow: 0 0 6px rgba(99,102,241,0.7);
+      outline-offset: 2px;
+    }
+    .game-thumbnail {
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .game-thumbnail:hover:not([aria-pressed="true"]),
+    .game-thumbnail:focus-visible:not([aria-pressed="true"]) {
+      border-color: #a5b4fc; /* lighter indigo */
+      box-shadow: 0 0 4px rgba(165,180,252,0.7);
+      outline-offset: 2px;
+    }
+
+    /* Modern arrow buttons just outside carousel */
+    .game-carousel-arrow {
+      position: absolute;
+      top: 45%;
+      transform: translateY(-55%);
+      width: 35px;
+      height: 35px;
+      background: rgba(255 255 255 / 0.85);
+      border-radius: 9999px;
+      box-shadow: 0 3px 8px rgb(0 0 0 / 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      border: none;
+      z-index: 10;
+    }
+    .game-carousel-arrow:hover,
+    .game-carousel-arrow:focus-visible {
+      background: rgba(255 255 255 / 1);
+      color: #4f46e5; /* indigo-600 */
+      outline: none;
+    }
+    .game-carousel-arrow:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+    .game-carousel-arrow.left {
+      left: 0;
+      margin-left: -48px; /* Align relative to container */
+    }
+    .game-carousel-arrow.right {
+      right: 0;
+      margin-right: -48px; /* Align relative to container */
+    }
+
+    /* Scrollbar styling for thumbnails container */
+    .thumbnails-scroll::-webkit-scrollbar {
+      height: 6px;
+    }
+    .thumbnails-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .thumbnails-scroll::-webkit-scrollbar-thumb {
+      background-color: #a5b4fc;
+      border-radius: 3px;
+    }
+
+
+
+
+    .ss-rounded {border-radius: 6.1% / 14.22%; }
+
+
+
+.custom-shadow-top {
+  box-shadow:
+    0 -1px 4px rgba(0, 0, 0, 0.05),   /* subtle shadow above */
+  0 20px 25px -5px rgba(0, 0, 0, 0.1),
+  0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+
+
+
+/* Match news card background and shadow exactly */
+#community-racers .news-card {
+  background-color: #fafafa !important; /* same as news cards */
+  border-radius: 1rem !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important; /* subtle shadow */
+  cursor: default !important;
+  transition: none !important;
+}
+
+/* Disable hover/focus effects */
+#community-racers .news-card:hover,
+#community-racers .news-card:focus-within,
+#community-racers .news-card:focus-visible {
+  transform: none !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important; /* keep subtle shadow */
+  outline: none !important;
+}
+
+/* Make sure container doesn't clip shadows */
+#community-racers > div.overflow-hidden {
+  overflow: visible !important;
+}
+
+
+
+
+
+
+
+
+/* ───────── Overlay ───────── */
+#loading-screen{
+  position:fixed;inset:0;width:100vw;height:100vh;background:#fff;
+  display:flex;align-items:center;justify-content:center;z-index:9999;
+  opacity:0;visibility:hidden;animation-fill-mode:forwards;
+}
+#loading-screen.fade-in  {animation:fadeScreenIn .28s ease forwards;}  /* change duration freely */
+#loading-screen.fade-out {animation:fadeScreenOut .28s ease forwards;}
+
+#loading-logo{
+  max-width:590px;opacity:0;transform:scale(.85);
+}
+#loading-logo.active{                /* 1.32 s sequence */
+  animation:logoIn .24s ease forwards .12s,
+           logoOut .24s ease forwards .84s;
+}
+
+/* ───────── Your original structure & transitions ───────── */
+.page-section{
+  visibility:hidden;opacity:0;
+  transition:visibility .5s ease,opacity .5s ease;
+}
+.page-section.loaded{visibility:visible;opacity:1;}
+
+.initial-page-icon-stack{
+  position:fixed;inset:0;background:#fff;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+}
+.initial-page-icon-stack.hidden{
+  display:none!important;visibility:hidden!important;opacity:0!important;transition:none!important;
+}
+
+/* ───────── Keyframes ───────── */
+@keyframes fadeScreenIn  {from{opacity:0;visibility:visible;}to{opacity:1;visibility:visible;}}
+@keyframes fadeScreenOut {from{opacity:1;}to{opacity:0;visibility:hidden;}}
+@keyframes logoIn        {to{opacity:1;transform:scale(1);}}
+@keyframes logoOut       {to{opacity:0;transform:scale(.75);}}
+
+
+
+
+
+  </style>
+</head>
+<body>
+
+
+<!--  ↓‐‐‐----– JS ONLY.  Drop it into the previous file ------------------------ -->
+  <script>
+const logoDur  = 1320;   // ms (logo plays on first load only)
+const pause100 = 100;    // ms (two short delays)
+
+/* helper: wait until an element’s current animation ends */
+const waitAnim = el =>
+  new Promise(res => el.addEventListener('animationend', res, { once: true }));
+
+function updateOrientation() {
+  const portrait = matchMedia('(orientation: portrait)').matches;
+  document.getElementById('portrait-icons').style.display  = portrait ? 'flex' : 'none';
+  document.getElementById('landscape-icons').style.display = portrait ? 'none' : 'flex';
+}
+
+/**
+ * runOverlay(showInitial, skipLogo)
+ *   showInitial = true  → end on ICON stack
+ *   showInitial = false → end on MAIN sections
+ *   skipLogo    = true  → don’t play logo sequence
+ */
+async function runOverlay(showInitial, skipLogo = false) {
+  const screen = document.getElementById('loading-screen');
+  const logo   = document.getElementById('loading-logo');
+  const secs   = document.querySelectorAll('.page-section');
+
+  /* ─ 1. Fade-IN overlay ────────────────────────── */
+  screen.style.display = 'flex';
+  screen.classList.add('fade-in');
+  await waitAnim(screen);                   // overlay fully opaque
+
+  screen.style.opacity    = '1';            // lock while swapping
+  screen.style.visibility = 'visible';
+  screen.classList.remove('fade-in');
+
+  /* ─ 2. Pause → swap → pause ───────────────────── */
+  await new Promise(r => setTimeout(r, pause100));
+
+  secs.forEach(sec => {
+    const isInitial = sec.classList.contains('initial-page-icon-stack');
+    const show      = showInitial ? isInitial : !isInitial;
+
+    /* instant-hide the normal sections when returning to the icon stack */
+    if (showInitial && !isInitial) {
+      sec.style.transition = 'none';
+      sec.style.visibility = 'hidden';
+      sec.style.opacity    = '0';
+    }
+
+    sec.classList.toggle('loaded', show);
+    if (isInitial) sec.classList.toggle('hidden', !show);
+  });
+
+  await new Promise(r => setTimeout(r, pause100));
+
+  /* ─ 3. Logo only on very first landing ─────────── */
+  if (!skipLogo && showInitial) {
+    logo.classList.add('active');
+    await new Promise(r => setTimeout(r, logoDur));
+    logo.classList.remove('active');
+  }
+
+  /* ─ 4. Fade-OUT overlay ───────────────────────── */
+  void screen.offsetWidth;                  // restart animation
+  screen.classList.add('fade-out');
+  await waitAnim(screen);                   // wait .28 s (or whatever CSS sets)
+
+  /* ─ 5. Clean-up (reset inline styles) ─────────── */
+  screen.removeAttribute('style');
+  screen.classList.remove('fade-out');
+  secs.forEach(sec => {
+    sec.style.transition = '';
+    sec.style.visibility = '';
+    sec.style.opacity    = '';
+  });
+}
+
+/* ───────── BOOTSTRAP ───────── */
+window.addEventListener('load', async () => {
+  updateOrientation();
+  window.addEventListener('resize', updateOrientation);
+
+  /* ① first arrival: icon stack + logo */
+  await runOverlay(true);
+
+  /* ② icon click → forward transition (no logo) */
+  document
+    .querySelectorAll('#initial-page-icon-stack img, #initial-page-icon-stack button')
+    .forEach(el => el.addEventListener('click', () => runOverlay(false, true)));
+});
+
+/* ③ “back” helper (attach to any control you like) */
+function goBackToInitialPage() {
+  runOverlay(true, true);                   // back to icons, no logo
+}
+</script>
+
+
+
+
+
+
+
+<!-- put this anywhere after your current script, or merge into it -->
+<script>
+/* call this from any button, menu item, etc. */
+function goBackToInitialPage() {
+  /* showInitial = true, but skipLogo = true  → no logo on the way back */
+  runOverlay(true, /* skipLogo = */ true);
+}
+</script>
+
+
+
+
+
+  <script>
+  function scrollToTopAfterDelay() {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }, 350);
+  }
+  </script>
+
+
+
+
+
+<!-- swich games-->
+
+<script>  // Game info arrays
+  const autosportMobileIcon = 'images/icon_final_high_res.png';
+  const autosportCustomsIcon = 'images/testtt.png';
+  const autosportLegendIcon = 'images/testtt2.png';
+
+  const autosportMobileScreenshots = [
+    'images/ss_iphone_1.png',
+    'images/ss_iphone_2.png',
+    'images/ss_iphone_3.png',
+    'images/ss_iphone_4.png',
+    'images/ss_iphone_5.png',
+    'images/ss_iphone_6.png',
+    'images/ss_iphone_7.png',
+    'images/ss_iphone_8.png'
+  ];
+  const autosportCustomsScreenshots = [
+    'images/ss_white.png','images/ss_white.png','images/ss_white.png','images/ss_white.png',
+    'images/ss_white.png','images/ss_white.png','images/ss_white.png','images/ss_white.png'
+  ];
+  const autosportLegendScreenshots = [
+    'images/ss_white.png','images/ss_white.png','images/ss_white.png','images/ss_white.png',
+    'images/ss_white.png','images/ss_white.png','images/ss_white.png','images/ss_white.png'
+  ];
+
+  const autosportMobileTitle = 'Autofest Mobile';
+  const autosportCustomsTitle = 'Autofest Customs';
+  const autosportLegendTitle = 'Autofest Legends';
+
+  // ADD: Descriptions for each mode
+  const autosportMobileDescription = `Autofest Mobile is an exotic open-world racing game and an immersive driving experience on mobile. 
+  Explore tropical islands with large cities, sandy beaches, and hidden challenges. Compete in more than 10 motorsports like Formula, Drift,
+   Rally, Drag Racing, and Monster Truck. Play wild game modes such as Battle Royale, Eliminator, Sumo, Buggy, and many special seasonal events 
+   and challenges. Collect cars, start your career and  explore an exotic world that never ends — with endless ways to play and total freedom.`;
+
+  const autosportCustomsDescription = `Autofest Customs is an exotic open-world racing game and an immersive driving experience on mobile. 
+  Explore tropical islands with large cities, sandy beaches, and hidden challenges. Compete in more than 10 motorsports like Formula, Drift,
+   Rally, Drag Racing, and Monster Truck. Play wild game modes such as Battle Royale, Eliminator, Sumo, Buggy, and many special seasonal events 
+   and challenges. Collect cars, start your career and  explore an exotic world that never ends — with endless ways to play and total freedom.`;
+
+  const autosportLegendDescription = `Autofest Legends is an exotic open-world racing game and an immersive driving experience on mobile. 
+  Explore tropical islands with large cities, sandy beaches, and hidden challenges. Compete in more than 10 motorsports like Formula, Drift,
+   Rally, Drag Racing, and Monster Truck. Play wild game modes such as Battle Royale, Eliminator, Sumo, Buggy, and many special seasonal events 
+   and challenges. Collect cars, start your career and  explore an exotic world that never ends — with endless ways to play and total freedom.`;
+    const autosportMobileFeatures = [
+  { img: "images/fire_icon.png", title: "Massive Exotic Open World" },
+  { img: "images/fire_icon.png", title: "All Competitive Motorsports" },
+  { img: "images/fire_icon.png", title: "Original Game Modes" },
+  { img: "images/fire_icon.png", title: "Intense Gameplay Mechanics" },
+  { img: "images/fire_icon.png", title: "Immersive Driving and Physics" },
+  { img: "images/fire_icon.png", title: "Super Wheelspins & Rewards" },
+  { img: "images/fire_icon.png", title: "Real-Time Multiplayer" },
+  { img: "images/fire_icon.png", title: "Built to Keep Growing" }
+];
+
+const autosportCustomsFeatures = [
+  { img: "images/fire_icon.png", title: "Customs Feature 1" },
+  { img: "images/fire_icon.png", title: "Customs Feature 2" },
+  { img: "images/fire_icon.png", title: "Customs Feature 3" },
+  { img: "images/fire_icon.png", title: "Customs Feature 4" },
+  { img: "images/fire_icon.png", title: "Customs Feature 5" },
+  { img: "images/fire_icon.png", title: "Customs Feature 6" },
+  { img: "images/fire_icon.png", title: "Customs Feature 7" },
+  { img: "images/fire_icon.png", title: "Customs Feature 8" }
+];
+
+const autosportLegendFeatures = [
+  { img: "images/fire_icon.png", title: "Legend Feature 1" },
+  { img: "images/fire_icon.png", title: "Legend Feature 2" },
+  { img: "images/fire_icon.png", title: "Legend Feature 3" },
+  { img: "images/fire_icon.png", title: "Legend Feature 4" },
+  { img: "images/fire_icon.png", title: "Legend Feature 5" },
+  { img: "images/fire_icon.png", title: "Legend Feature 6" },
+  { img: "images/fire_icon.png", title: "Legend Feature 7" },
+  { img: "images/fire_icon.png", title: "Legend Feature 8" }
+];
+
+
+  // Helper to swap screenshots
+  function swapScreenshots(screenshotList) {
+    const imgs = document.querySelectorAll('#game-preview img[alt^="Screenshot"]');
+    imgs.forEach((img, i) => {
+      if (screenshotList[i]) {
+        img.src = screenshotList[i];
+      }
+    });
+  }
+
+  // Helper to swap game icon in #game-hub
+  function swapGameIcon(iconSrc) {
+    const iconImg = document.querySelector('#game-hub img[alt="Game Icon"]');
+    if (iconImg) {
+      iconImg.src = iconSrc;
+    }
+  }
+
+  // Helper to swap game icon in #get-forza (the Forza icon)
+  function swapForzaIcon(iconSrc) {
+    const forzaIconImg = document.querySelector('#get-forza img.w-60');
+    if (forzaIconImg) {
+      forzaIconImg.src = iconSrc;
+    }
+  }
+
+  // Helper to swap the game title (the h2)
+  function swapGameTitle(title) {
+    const titleEl = document.querySelector('#game-hub h2');
+    if (titleEl) {
+      titleEl.textContent = title;
+    }
+  }
+
+  // Helper to swap the description in #get-forza
+  function swapDescription(description) {
+    // Finds the first <p> inside #get-forza
+    const descEl = document.querySelector('#get-forza p');
+    if (descEl) {
+      descEl.textContent = description;
+    }
+  }
+
+  function swapGameFeatures(featuresArray) {
+  const carouselInner = document.getElementById("carouselInner");
+  const pagination = document.getElementById("pagination");
+  if (!carouselInner || !pagination) return;
+
+  // Clear old content
+  carouselInner.innerHTML = '';
+  pagination.innerHTML = '';
+  currentIndex = 0;
+  isAnimating = false;
+  stopCarousel();
+
+  // Re-create all feature slides (match your initial structure)
+  featuresArray.forEach(({img, title}) => {
+    const card = document.createElement("div");
+    card.className = "min-w-full flex items-center space-x-4 px-0";
+    card.style.backgroundColor = "#fff";
+    card.style.justifyContent = "center";
+    card.innerHTML = `
+      <img src="${img}" alt="" class="w-16 h-16 flex-shrink-0" style="object-fit:contain;" />
+      <div class="text-left max-w-5xl">
+        <h3 class="font-extrabold text-4xl leading-tight">${title}</h3>
+      </div>
+    `;
+    carouselInner.appendChild(card);
+  });
+
+  // Clone first slide to end for seamless looping
+  if (carouselInner.children.length > 0) {
+    const firstClone = carouselInner.children[0].cloneNode(true);
+    carouselInner.appendChild(firstClone);
+  }
+
+  // Create pagination dots
+  featuresArray.forEach((_, i) => {
+    const dot = document.createElement("button");
+    dot.className = "w-5 h-5 rounded-full bg-gray-400/50";
+    if(i === 0) dot.classList.add("bg-gray-800");
+    dot.setAttribute("aria-label", `Feature ${i + 1}`);
+    dot.disabled = true;
+    pagination.appendChild(dot);
+  });
+
+  // Go to first slide, reset everything
+  goToSlide(0, false);
+  startCarousel();
+}
+
+// ——————————— NEW HELPER (no HTML changes needed) ———————————
+// Helper that changes ONLY that span
+function swapFooterTitle(title) {
+  const el = document.querySelector('.text-footer');
+  if (el) el.textContent = title;
+}
+  // Methods
+  function swapToAutosportMobile() {
+ 
+  swapScreenshots(autosportMobileScreenshots);
+  swapGameIcon(autosportMobileIcon);
+  swapGameTitle(autosportMobileTitle);
+  swapForzaIcon(autosportMobileIcon);
+  swapDescription(autosportMobileDescription);
+  swapGameFeatures(autosportMobileFeatures);
+  swapGameReviews(0);
+    scrollToTopAfterDelay(); // scroll to top after a short delay
+    swapFooterTitle('Autofest Mobile');
+
+}
+function swapToAutosportCustoms() {
+  swapScreenshots(autosportCustomsScreenshots);
+  swapGameIcon(autosportCustomsIcon);
+  swapGameTitle(autosportCustomsTitle);
+  swapForzaIcon(autosportCustomsIcon);
+  swapDescription(autosportCustomsDescription);
+  swapGameFeatures(autosportCustomsFeatures);
+  swapGameReviews(1);
+    scrollToTopAfterDelay(); // scroll to top after a short delay
+    swapFooterTitle("Autofest Customs");
+
+}
+function swapToAutosportLegend() {
+  swapScreenshots(autosportLegendScreenshots);
+  swapGameIcon(autosportLegendIcon);
+  swapGameTitle(autosportLegendTitle);
+  swapForzaIcon(autosportLegendIcon);
+  swapDescription(autosportLegendDescription);
+  swapGameFeatures(autosportLegendFeatures);
+  swapGameReviews(2);
+    scrollToTopAfterDelay(); // scroll to top after a short delay
+    swapFooterTitle("Autofest Legends");
+
+}
+
+
+</script>
+
+  
+
+
+
+
+
+<div id="loading-screen">
+  <img
+    src="images/transparent_logo.png"
+    alt="Loading Logo"
+    id="loading-logo"
+  />
+</div>
+
+
+
+
+
+
+
+
+
+<section id="initial-page-icon-stack" class="bg-white text-center initial-page-icon-stack page-section">
+  <!-- Landscape container: icons in a row, smaller -->
+  <div id="landscape-icons" style="display:none; max-width: 384px; margin: 0 auto; 
+       display: flex; flex-direction: row; justify-content: center; gap: 2.5rem; align-items: center;">
+    <img src="images/icon_final_high_res.png"
+         alt="Icon 1"
+         class="object-cover custom-shadow-top transition-all duration-200 ease-in-out transform hover:scale-[1.05]"
+         style="border-radius: 20%; width: 16rem; height: 16rem;"
+         onclick="swapToAutosportMobile()" />
+    <img src="images/testtt.png"
+         alt="Icon 2"
+         class="object-cover custom-shadow-top transition-all duration-200 ease-in-out transform hover:scale-[1.05]"
+         style="border-radius: 20%; width: 16rem; height: 16rem;"
+         onclick="swapToAutosportCustoms()" />
+    <img src="images/testtt2.png"
+         alt="Icon 3"
+         class="object-cover custom-shadow-top transition-all duration-200 ease-in-out transform hover:scale-[1.05]"
+         style="border-radius: 20%; width: 16rem; height: 16rem;"
+         onclick="swapToAutosportLegend()" />
+  </div>
+
+  <!-- Portrait container: stacked icons, bigger -->
+  <div id="portrait-icons" style="display:none; max-width: 384px; margin: 0 auto; 
+       display: flex; flex-direction: column; justify-content: center; gap: 2.5rem; align-items: center;">
+    <img src="images/icon_final_high_res.png"
+         alt="Icon 1"
+         class="object-cover custom-shadow-top transition-all duration-200 ease-in-out transform hover:scale-[1.05]"
+         style="border-radius: 20%; width: 20rem; height: 20rem;"
+         onclick="swapToAutosportMobile()" />
+    <img src="images/testtt.png"
+         alt="Icon 2"
+         class="object-cover custom-shadow-top transition-all duration-200 ease-in-out transform hover:scale-[1.05]"
+         style="border-radius: 20%; width: 20rem; height: 20rem;"
+         onclick="swapToAutosportCustoms()" />
+    <img src="images/testtt2.png"
+         alt="Icon 3"
+         class="object-cover custom-shadow-top transition-all duration-200 ease-in-out transform hover:scale-[1.05]"
+         style="border-radius: 20%; width: 20rem; height: 20rem;"
+         onclick="swapToAutosportLegend()" />
+  </div>
+
+</section>
+
+<script>
+  function toggleOrientationContainers() {
+    const landscape = document.getElementById('landscape-icons');
+    const portrait = document.getElementById('portrait-icons');
+    if (window.innerWidth > window.innerHeight) {
+      // Landscape
+      landscape.style.display = 'flex';
+      portrait.style.display = 'none';
+    } else {
+      // Portrait
+      landscape.style.display = 'none';
+      portrait.style.display = 'flex';
+    }
+  }
+  window.addEventListener('DOMContentLoaded', toggleOrientationContainers);
+  window.addEventListener('resize', toggleOrientationContainers);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<section id="game-hub" class="pt-40 pb-6 bg-white text-center mt-40 page-section">
+  <div class="max-w-lg mx-auto flex flex-col items-center space-y-10">    
+    <!-- Game icon -->
+    <img src="images/icon_final_high_res.png"
+      alt="Game Icon"
+      class="w-64 h-64 object-cover custom-shadow-top transition-all duration-200 ease-in-out transform hover:scale-[1.05]"
+      style="border-radius: 20%;"
+      onclick="goBackToInitialPage()" />
+
+    <div class="flex flex-row flex-wrap gap-4 items-center justify-center pt-4 pb-4">
+      <!-- Store BADGES 
+      <a href="#" class="block">
+        <img
+        src="appstore.svg"
+          alt="Download on the App Store"
+          class="h-16 w-auto">
+      </a>
+      <a href="#" class="block">
+        <img
+        src="google play.svg"
+          alt="Get it on Google Play"
+          class="h-16 w-auto">
+      </a>
+      -->
+    </div>
+
+    <h2 class="text-5xl font-extrabold mb-5 tracking-tight">Autosport Mobile</h2>
+
+    <!-- Social icons -->
+    <div class="flex space-x-8 text-4xl text-gray-800">
+      <a href="#" aria-label="Facebook"  class="hover:text-blue-600"><i class="fab fa-facebook"></i></a>
+      <a href="#" aria-label="Twitch"    class="hover:text-purple-600"><i class="fab fa-twitch"></i></a>
+      <a href="#" aria-label="Discord"   class="hover:text-indigo-500"><i class="fab fa-discord"></i></a>
+      <a href="#" aria-label="Twitter"   class="hover:text-sky-500"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="Instagram" class="hover:text-pink-600"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="YouTube"   class="hover:text-red-600"><i class="fab fa-youtube"></i></a>
+    </div>
+
+  </div>
+</section>
+<!-- ———————————————————————————————————————————————————————————— -->
+
+
+
+<!-- CLICK TO OPNE ONLY ONE --------------- AUTOSPORT MOBILE --------->
+<section id="game-preview" class="py-20 bg-white text-center  page-section">
+  <h2 class="text-3xl font-extrabold mb-10 tracking-tight page-section">GAME PREVIEW</h2>
+  <div class="flex flex-col gap-6 items-center">
+    <div class="transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
+      <img src="images/ss_iphone_1.png" alt="Screenshot 1"
+           class="ss-rounded shadow-xl object-cover clickable-ss"
+           style="width: 90vw; max-width: 1100px; aspect-ratio: 19.5 / 9;" />
+    </div>
+    <div class="transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
+      <img src="images/ss_iphone_2.png" alt="Screenshot 2"
+           class="ss-rounded shadow-xl object-cover clickable-ss"
+           style="width: 90vw; max-width: 1100px; aspect-ratio: 19.5 / 9;" />
+    </div>
+    <div class="transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
+      <img src="images/ss_iphone_3.png" alt="Screenshot 3"
+           class="ss-rounded shadow-xl object-cover clickable-ss"
+           style="width: 90vw; max-width: 1100px; aspect-ratio: 19.5 / 9;" />
+    </div>
+    <div class="transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
+      <img src="images/ss_iphone_4.png" alt="Screenshot 4"
+           class="ss-rounded shadow-xl object-cover clickable-ss"
+           style="width: 90vw; max-width: 1100px; aspect-ratio: 19.5 / 9;" />
+    </div>
+    <div class="transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
+      <img src="images/ss_iphone_5.png" alt="Screenshot 5"
+           class="ss-rounded shadow-xl object-cover clickable-ss"
+           style="width: 90vw; max-width: 1100px; aspect-ratio: 19.5 / 9;" />
+    </div>
+    <div class="transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
+      <img src="images/ss_iphone_6.png" alt="Screenshot 6"
+           class="ss-rounded shadow-xl object-cover clickable-ss"
+           style="width: 90vw; max-width: 1100px; aspect-ratio: 19.5 / 9;" />
+    </div>
+    <div class="transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
+      <img src="images/ss_iphone_7.png" alt="Screenshot 7"
+           class="ss-rounded shadow-xl object-cover clickable-ss"
+           style="width: 90vw; max-width: 1100px; aspect-ratio: 19.5 / 9;" />
+    </div>
+    <div class="transition-all duration-200 ease-in-out transform hover:scale-[1.02]">
+      <img src="images/ss_iphone_8.png" alt="Screenshot 8"
+           class="ss-rounded shadow-xl object-cover clickable-ss"
+           style="width: 90vw; max-width: 1100px; aspect-ratio: 19.5 / 9;" />
+    </div>
+  </div>
+</section>
+
+<div id="fullscreenOverlay" style="
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: white;
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  cursor: pointer;
+">
+  <button id="closeOverlay" aria-label="Close fullscreen" style="
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    font-size: 3rem;
+    cursor: pointer;
+    color: #ffffff;
+    z-index: 10000;
+    pointer-events: auto;
+  ">&times;</button>
+
+  <div id="fullscreenContent" style="padding: 0 100px; display: flex; justify-content: center;">
+    <img
+      id="fullscreenImage"
+      src=""
+      alt="Fullscreen Screenshot"
+      class="ss-rounded shadow-xl object-cover"
+      style="
+        width: 100%;
+        max-width: none;
+        aspect-ratio: 19.5 / 9;
+        transition: transform 0.3s ease;
+        pointer-events: none; /* allow clicks to pass to overlay */
+      "
+    />
+  </div>
+</div>
+<script>
+
+function isMobile() {
+  return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
+
+  const overlay = document.getElementById('fullscreenOverlay');
+  const fullscreenImage = document.getElementById('fullscreenImage');
+  const closeBtn = document.getElementById('closeOverlay');
+
+  function isPortraitScreen() {
+    return window.innerHeight / window.innerWidth > 1;
+  }
+
+  document.querySelectorAll('.clickable-ss').forEach(img => {
+  img.style.cursor = 'pointer';
+  img.addEventListener('click', () => {
+    if (isMobile()) return; // ⛔ Prevent fullscreen on mobile
+
+    fullscreenImage.src = img.src;
+    fullscreenImage.alt = img.alt || "Fullscreen Screenshot";
+
+
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  });
+});
+
+
+  closeBtn.addEventListener('click', closeFullscreen);
+
+  overlay.addEventListener('click', closeFullscreen);
+
+  function closeFullscreen() {
+    overlay.style.display = 'none';
+    fullscreenImage.src = '';
+    document.body.style.overflow = '';
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<!-- FEATURES SECTION-->
+<section class="bg-white text-gray-900 page-section py-20 game-features-page">
+  <div class="max-w-6xl mx-auto px-6 text-center">
+    <h2 class="text-3xl font-extrabold mb-8 tracking-tight">FEATURES</h2>
+
+  <div class="relative overflow-hidden" id="carouselContainer">
+  <div id="carouselInner" class="flex transition-transform duration-500 ease-in-out">
+    <!-- Features injected here by JS -->
+  </div>
+  </div>
+
+  <!-- Pagination dots -->
+  <div id="pagination" class="mt-10 flex justify-center space-x-5 pb-20"></div>
+  </div>
+</section>
+
+<script>  const features = [
+    {
+      img: "images/fire_icon.png",
+      title: "Massive Exotic Open World",
+    },
+    {
+      img: "images/fire_icon.png",
+      title: "All Competitive Motorsports",
+    },
+    {
+      img: "images/fire_icon.png",
+      title: "Original Game Modes",
+    },
+    {
+      img: "images/fire_icon.png",
+      title: "Intense Gameplay Mechanics",
+    },
+    {
+      img: "images/fire_icon.png",
+      title: "Immersive Driving and Physics",
+    },
+    {
+      img: "images/fire_icon.png",
+      title: "Super Wheelspins & Rewards",
+    },
+    {
+      img: "images/fire_icon.png",
+      title: "Real-Time Multiplayer",
+    },
+    {
+      img: "images/fire_icon.png",
+      title: "Built to Keep Growing",
+    }
+  ];
+
+  const carouselInner = document.getElementById("carouselInner");
+  const pagination = document.getElementById("pagination");
+  let currentIndex = 0;
+  let isAnimating = false;
+  let timer;
+
+  // Clone first slide to the end for seamless looping
+  features.forEach(({img, title}) => {
+    const card = document.createElement("div");
+    card.className = "min-w-full flex items-center space-x-4 px-0";
+    card.style.backgroundColor = "#fff";
+    card.style.justifyContent = "center";
+    card.innerHTML = `
+      <img src="${img}" alt="" class="w-16 h-16 flex-shrink-0" style="object-fit:contain;" />
+      <div class="text-left max-w-5xl">
+        <h3 class="font-extrabold text-4xl leading-tight">${title}</h3>
+      </div>
+    `;
+    carouselInner.appendChild(card);
+    });
+    // Clone first slide
+    const firstClone = carouselInner.children[0].cloneNode(true);
+    carouselInner.appendChild(firstClone);
+
+    // Create pagination dots
+    features.forEach((_, i) => {
+    const dot = document.createElement("button");
+    dot.className = "w-5 h-5 rounded-full bg-gray-400/50";
+    if(i === 0) dot.classList.add("bg-gray-800");
+    dot.setAttribute("aria-label", `Feature ${i + 1}`);
+    dot.disabled = true; // Disable dot interaction
+    pagination.appendChild(dot);
+    });
+
+    function updatePagination() {
+    Array.from(pagination.children).forEach((dot, i) => {
+      dot.classList.toggle("bg-gray-800", i === (currentIndex % features.length));
+      dot.classList.toggle("bg-gray-400/50", i !== (currentIndex % features.length));
+    });
+    }
+
+    function goToSlide(index, animate = true) {
+    if (animate) {
+      carouselInner.style.transition = "transform 0.3s ease-in-out";
+    } else {
+      carouselInner.style.transition = "none";
+    }
+    carouselInner.style.transform = `translateX(-${index * 100}%)`;
+    updatePagination();
+    }
+
+    function nextSlide() {
+    if (isAnimating) return;
+    isAnimating = true;
+    currentIndex++;
+    goToSlide(currentIndex, true);
+
+    // If at the cloned slide, reset to real first slide after animation
+    if (currentIndex === features.length) {
+      setTimeout(() => {
+      carouselInner.style.transition = "none";
+      currentIndex = 0;
+      goToSlide(currentIndex, false);
+      isAnimating = false;
+      }, 300);
+    } else {
+      setTimeout(() => {
+      isAnimating = false;
+      }, 300);
+    }
+    }
+
+    function startCarousel() {
+    timer = setInterval(nextSlide, 1300); // 0.3s anim + 1s display
+    }
+
+    function stopCarousel() {
+    clearInterval(timer);
+    }
+
+    // Remove manual dot navigation (no event listeners)
+
+    // Initialize
+    goToSlide(currentIndex, false);
+  startCarousel();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<!-- DOWNLOAD NOW SECTION-->
+
+<div style="background-color: #f5f5f5;">
+
+<section id="get-forza" class="relative bg-gray-100 text-black px-8 overflow-visible page-section">
+  
+  <!-- Top grunge overlay -->
+  <img 
+    src="images/section-top.png" 
+    alt="Grunge Top Edge" 
+    class="absolute top-0 left-0 w-full pointer-events-none select-none"
+    style="height: 80px; object-fit: cover; margin-top: -40px;"
+  />
+
+  <div class="max-w-[1600px] mx-auto flex items-center justify-center margin p-4">
+    <div class="flex flex-col lg:flex-row w-full gap-16 items-center pt-24 pb-24 ">
+      <!-- Left side: Text -->
+      <div class="flex-1 flex flex-col items-start text-left">
+        <h2 class="font-extrabold text-5xl sm:text-5xl mb-10 tracking-tight text-center lg:text-left">
+          JOIN MILLIONS NOW
+        </h2>
+        <p class="text-xl leading-relaxed text-center lg:text-left max-w-5xl line-clamp-6">
+          Autofest Mobile is an exotic open-world racing game and an immersive driving experience on mobile. 
+  Explore tropical islands with large cities, sandy beaches, and hidden challenges. Compete in more than 10 motorsports like Formula, Drift,
+   Rally, Drag Racing, and Monster Truck. Play wild game modes such as Battle Royale, Eliminator, Sumo, Buggy, and many special seasonal events 
+   and challenges. Collect cars, start your career and  explore an exotic world that never ends — with endless ways to play and total freedom.
+        </p>
+      </div>
+
+      <!-- Right side: Game Icon + icons -->
+      <div class="flex flex-col items-center">
+        <img 
+          src="images/icon_final_high_res.png" 
+          alt="Forza Horizon 5" 
+          class="w-60 h-60 object-cover custom-shadow-top mb-4 rounded-[20%] transition-all duration-200 ease-in-out transform hover:scale-[1.05]" 
+        />
+        <div class="flex justify-center space-x-10">
+          <a href="#" aria-label="Apple Store">
+            <i class="fab fa-apple text-6xl transition-all duration-200 ease-in-out transform hover:scale-[1.09]" ></i>
+          </a>
+          <a href="#" aria-label="Google Play"> 
+            <i class="fab fa-google-play text-5xl mt-[0.57rem] transition-all duration-200 ease-in-out transform hover:scale-[1.09]"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom grunge overlay -->
+  <img 
+    src="images/section-bottom.png" 
+    alt="Grunge Bottom Edge" 
+    class="absolute bottom-0 left-0 w-full pointer-events-none select-none"
+    style="height: 80px; object-fit: cover; margin-bottom: -40px;"
+  />
+</section>
+
+
+
+</div>
+
+
+
+
+
+
+
+  
+  
+<!-- COMUNITY SECTION-->
+
+<section id="community-racers" class="py-20 bg-white text-gray-900 mt-8  page-section" aria-label="Our Community Racers">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl font-extrabold mb-12 tracking-tight">OUR COMMUNITY</h2>
+
+    <div id="cardsContainer" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
+      <div id="cardsWrapper" class="flex flex-nowrap justify-center gap-8">
+        <!-- Cards rendered here by JS -->
+      </div>
+    </div>
+
+    <!-- Pagination dots 
+    <div id="paginationDots" class="flex justify-center space-x-4 mt-8">
+      <button aria-label="Go to page 1" class="w-4 h-4 rounded-full bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"></button>
+      <button aria-label="Go to page 2" class="w-4 h-4 rounded-full bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"></button>
+      <button aria-label="Go to page 3" class="w-4 h-4 rounded-full bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"></button>
+    </div>
+    -->
+  </div>
+</section>
+
+<style>
+  /* Unique class for community racers cards to avoid conflicts */
+  .community-card {
+    width: 480px;
+    height: 250px; /* Fixed height */
+    background-color: #fafafa;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    cursor: default;
+    transition: none;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem; /* Matches p-6 padding */
+    box-sizing: border-box;
+  }
+  .community-card-content {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    text-align: left;
+  }
+  .community-card-header {
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .community-card-header img {
+    width: 64px;
+    height: 64px;
+    border-radius: 9999px;
+    object-fit: cover;
+  }
+  .community-card-header div p:first-child {
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: #111827;
+    margin: 0;
+  }
+  .community-card-header div p:last-child {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0;
+  }
+  .community-card-stars {
+  display: flex;
+  justify-content: flex-start;
+  color: #fbbf24;
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  margin-top: 1rem; /* Adjusted to align with text */
+}
+  .community-card-text {
+    font-size: 1rem;
+    line-height: 1.4;
+    color: #374151;
+    overflow-wrap: break-word;
+  }
+</style>
+
+<script>
+  const cardsData = [
+  {
+    name: "Autofest User",
+    role: "Autofest Mobile User",
+    text: "Addictive gameplay and stunning graphics, Autofest Mobile is a must-play for anyone!",
+    img: "images/ss_white.png",
+    aria: "John Green testimonial",
+  },
+  {
+    name: "Autofest User",
+    role: "Autofest Mobile User",
+    text: "Addictive gameplay and stunning graphics, Autofest Mobile is a must-play for anyone!",
+    img: "images/ss_white.png",
+    aria: "Sabo Masties testimonial",
+  },
+  {
+    name: "Customs User",
+    role: "Autofest Customs User",
+    text: "Addictive gameplay and stunning graphics, Autofest Customs is a must-play for anyone!",
+    img: "images/ss_white.png",
+    aria: "Anna Swat testimonial",
+  },
+  {
+    name: "Customs User",
+    role: "Autofest Customs User",
+    text: "Addictive gameplay and stunning graphics, Autofest Customs is a must-play for anyone!",
+    img: "images/ss_white.png",
+    aria: "Jake Turner testimonial",
+  },
+  {
+    name: "Legend User",
+    role: "Autofest Legends User",
+    text: "Addictive gameplay and stunning graphics, Autofest Legends is a must-play for anyone!",
+    img: "images/ss_white.png",
+    aria: "Maria Lopez testimonial",
+  },
+  {
+    name: "Legend User",
+    role: "Autofest Legends User",
+    text: "Addictive gameplay and stunning graphics, Autofest Legends is a must-play for anyone!",
+    img: "images/ss_white.png",
+    aria: "Ethan Brooks testimonial",
+  },
+];
+
+
+  const cardsWrapper = document.getElementById("cardsWrapper");
+  const dots = Array.from(document.querySelectorAll("#paginationDots button"));
+  const cardsPerPage = 2;
+
+  function renderCards(pageIndex) {
+    cardsWrapper.innerHTML = ""; // clear existing cards
+
+    const start = pageIndex * cardsPerPage;
+    const end = start + cardsPerPage;
+    const pageCards = cardsData.slice(start, end);
+
+    pageCards.forEach((card) => {
+      const cardElem = document.createElement("article");
+      cardElem.className = "community-card";
+      cardElem.setAttribute("aria-label", card.aria);
+
+      cardElem.innerHTML = `
+        <div class="community-card-header">
+          <img src="${card.img}" alt="${card.name}" />
+          <div>
+            <p>${card.name}</p>
+            <p>${card.role}</p>
+          </div>
+        </div>
+        <div class="community-card-stars" aria-hidden="true">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+        </div>
+        <div class="community-card-content">
+          <p class="community-card-text">${card.text}</p>
+        </div>
+      `;
+      cardsWrapper.appendChild(cardElem);
+    });
+  }
+
+  function updateActiveDot(activeIndex) {
+    dots.forEach((d, i) => {
+      if (i === activeIndex) {
+        d.classList.remove("bg-gray-300");
+        d.classList.add("bg-gray-700");
+      } else {
+        d.classList.remove("bg-gray-700");
+        d.classList.add("bg-gray-300");
+      }
+    });
+  }
+
+  dots.forEach((dot, idx) => {
+    dot.addEventListener("click", () => {
+      renderCards(idx);
+      updateActiveDot(idx);
+    });
+  });
+
+  // Initialize first page
+  renderCards(0);
+  updateActiveDot(0);
+
+  function swapGameReviews(pageStart) {
+  renderCards(pageStart);    // show 2 reviews starting from pageStart * 2
+  updateActiveDot(pageStart);
+}
+</script>
+
+
+
+
+
+<section id="social-boxes" class="bg-white text-gray-900 page-section" style="margin-top: -3rem;">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 justify-center">    <!-- Box 1 -->
+    <div
+      class="social-box bg-[#fafafa] rounded-xl p-4 flex flex-col items-center"
+      style="max-width: 280px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);"
+    >
+      <img
+        src="images/ss_white.png"
+        alt="Thumbnail"
+        style="width: 100%; aspect-ratio: 1 / 1.4; object-fit: cover; border-radius: 0.75rem; margin-bottom: 1rem;"
+      />
+      <div class="flex items-center justify-between w-full px-2">
+        <p class="text-gray-900 font-semibold text-lg">@username_1</p>
+        <a
+          href="#"
+          class="text-gray-700 hover:text-gray-900 focus:outline-none "
+          aria-label="Instagram"
+          tabindex="0"
+        >
+          <i class="fab fa-instagram fa-lg"></i>
+        </a>
+      </div>
+    </div>    <!-- Box 2 -->
+    <div
+      class="social-box bg-[#fafafa] rounded-xl p-4 flex flex-col items-center"
+      style="max-width: 280px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);"
+    >
+      <img
+        src="images/ss_white.png"
+        alt="Thumbnail"
+        style="width: 100%; aspect-ratio: 1 / 1.4; object-fit: cover; border-radius: 0.75rem; margin-bottom: 1rem;"
+      />
+      <div class="flex items-center justify-between w-full px-2">
+        <p class="text-gray-900 font-semibold text-lg">@username_2</p>
+        <a
+          href="#"
+          class="text-gray-700 hover:text-gray-900 focus:outline-none "
+          aria-label="YouTube"
+          tabindex="0"
+        >
+          <i class="fab fa-youtube fa-lg"></i>
+        </a>
+      </div>
+    </div>    <!-- Box 3 -->
+    <div
+      class="social-box bg-[#fafafa] rounded-xl p-4 flex flex-col items-center"
+      style="max-width: 280px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);"
+    >
+      <img
+        src="images/ss_white.png"
+        alt="Thumbnail"
+        style="width: 100%; aspect-ratio: 1 / 1.4; object-fit: cover; border-radius: 0.75rem; margin-bottom: 1rem;"
+      />
+      <div class="flex items-center justify-between w-full px-2">
+        <p class="text-gray-900 font-semibold text-lg">@username_3</p>
+        <a
+          href="#"
+          class="text-gray-700 hover:text-gray-900 focus:outline-none "
+          aria-label="Reddit"
+          tabindex="0"
+        >
+          <i class="fab fa-reddit fa-lg"></i>
+        </a>
+      </div>
+    </div>    <!-- Box 4 -->
+    <div
+      class="social-box bg-[#fafafa] rounded-xl p-4 flex flex-col items-center"
+      style="max-width: 280px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);"
+    >
+      <img
+        src="images/ss_white.png"
+        alt="Thumbnail"
+        style="width: 100%; aspect-ratio: 1 / 1.4; object-fit: cover; border-radius: 0.75rem; margin-bottom: 1rem;"
+      />
+      <div class="flex items-center justify-between w-full px-2">
+        <p class="text-gray-900 font-semibold text-lg">@username_4</p>
+        <a
+          href="#"
+          class="text-gray-700 hover:text-gray-900 focus:outline-none "
+          aria-label="TikTok"
+          tabindex="0"
+        >
+          <i class="fab fa-tiktok fa-lg"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+
+
+
+  <!-- Community Section -->
+  <section id="community" class="py-16 bg-white text-center page-section" aria-label="Community Section">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-extrabold text-center mb-6 tracking-tight">JOIN US</h2>
+
+      <nav class="flex justify-center space-x-6 mb-2" aria-label="Social media links">
+        <a href="#" class="text-gray-700 hover:text-red-600 text-3xl focus:outline-none " aria-label="Reddit" tabindex="0"><i class="fab fa-reddit" aria-hidden="true"></i></a>
+        <a href="#" class="text-gray-700 hover:text-blue-600 text-3xl focus:outline-none " aria-label="Twitter" tabindex="0"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+        <a href="#" class="text-gray-700 hover:text-pink-600 text-3xl focus:outline-none " aria-label="Instagram" tabindex="0"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+        <a href="#" class="text-gray-700 hover:text-blue-700 text-3xl focus:outline-none " aria-label="Facebook" tabindex="0"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+        <a href="#" class="text-gray-700 hover:text-red-600 text-3xl focus:outline-none " aria-label="YouTube" tabindex="0"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+        <a href="#" class="text-gray-700 hover:text-purple-600 text-3xl focus:outline-none " aria-label="Discord" tabindex="0"><i class="fab fa-discord" aria-hidden="true"></i></a>
+      </nav>
+
+      </div>
+    </div>
+  </section>
+  
+  
+  
+
+
+
+
+
+  
+
+
+
+
+
+  <section id="contact" class="relative py-16 px-6 sm:px-8 lg:px-12 bg-gray-100 text-center overflow-visible page-section">
+    <!-- Top grunge overlay -->
+    <img
+      src="images/footer-down.png"
+      alt="Grunge Top Edge"
+      class="absolute top-0 left-0 w-full pointer-events-none select-none"
+      style="height: 60px; object-fit: cover; margin-top: -30px;"
+    />
+
+    <h2 class="text-3xl font-extrabold mb-2 tracking-tight uppercase">Contact Us</h2>
+    <p class="text-lg font-semibold text-gray-700 mb-4">We're Here to Help</p>
+    <p class="text-gray-500 max-w-2xl mx-auto mb-10">
+      Got a question, feedback, or just want to say hi? Reach out to the Spccell team — we’d love to hear from you.
+    </p>
+
+    <!-- Call-to-action banner -->
+    <div class="w-full max-w-3xl mx-auto bg-gradient-to-r from-black to-gray-900 rounded-xl shadow-lg px-6 py-6 flex items-center justify-center space-x-0">
+      <!-- Logo -->
+      <img
+        src="images/transparent_logo_truly.png"
+        alt="Spccell Logo"
+        class="h-36 sm:h-36 md:h-40 w-auto object-contain 
+        transition-all duration-200 ease-in-out transform hover:scale-[1.05]"
+        onclick="goBackToInitialPage()"
+      />
+    </div>
+  </section>
+</section>
+
+
+
+
+
+  
+
+
+
+<!-- —————————————————————— Footer Section (Bigger) —————————————————————— -->
+<footer class="bg-black text-white py-16  page-section">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col items-center space-y-12">
+
+    <a href="javascript:void(0);" onclick="goBackToInitialPage()">
+      <span class="text-footer text-5xl font-extrabold tracking-tight text-white inline-block transition-all duration-200 ease-in-out transform hover:scale-[1.03]">Autofest Mobile</span>
+      <!--
+      <img src="images/transparent_logo_truly.png" alt="Game Logo" 
+        class="h-36 mb-6 transition-transform duration-300 ease-in-out hover:scale-110" />
+    -->
+      </a>
+    
+
+
+    <!-- Navigation Links as Buttons -->
+  <nav class="flex flex-wrap justify-center gap-12 text-lg font-semibold tracking-wide">
+    <button type="button" class="hover:text-gray-500 transition-colors duration-200 bg-transparent border-none outline-none" onclick="footerDownloadClick()">Download</button>
+    <button type="button" class="hover:text-gray-500 transition-colors duration-200 bg-transparent border-none outline-none" onclick="footerFeaturesClick()">Features</button>
+    <button type="button" class="hover:text-gray-500 transition-colors duration-200 bg-transparent border-none outline-none" onclick="footerReviewsClick()">Community</button>
+    <button type="button" class="hover:text-gray-500 transition-colors duration-200 bg-transparent border-none outline-none" onclick="footerSupportClick()">Screenshots</button>
+    <button type="button" class="hover:text-gray-500 transition-colors duration-200 bg-transparent border-none outline-none" onclick="footerOurGamesClick()">Our Games</button>
+  </nav>
+
+  <script>
+  function footerDownloadClick() {
+    // Smooth scroll to the "get-forza" section and center it in the viewport
+    const section = document.getElementById('get-forza');
+    if (section) {
+      const rect = section.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const sectionCenter = rect.top + scrollTop - (window.innerHeight / 2) + (rect.height / 2);
+      window.scrollTo({ top: sectionCenter, behavior: 'smooth' });
+    }
+  }
+  function footerFeaturesClick() {
+    // Smooth scroll to the "game-features-page" section and center it in the viewport
+    const section = document.querySelector('.game-features-page');
+    if (section) {
+      const rect = section.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const sectionCenter = rect.top + scrollTop - (window.innerHeight / 2) + (rect.height / 2);
+      window.scrollTo({ top: sectionCenter, behavior: 'smooth' });
+    }
+  }
+  function footerReviewsClick() {
+    // Smooth scroll to the "community-racers" section and center it in the viewport
+    const section = document.getElementById('social-boxes');
+    if (section) {
+      const rect = section.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const sectionCenter = rect.top + scrollTop - (window.innerHeight / 2) + (rect.height / 2);
+      window.scrollTo({ top: sectionCenter, behavior: 'smooth' });
+    }
+  }
+  function footerSupportClick() {
+    // Smooth scroll to the "game-preview" section so its top aligns with the viewport top
+    const section = document.getElementById('game-preview');
+    if (section) {
+      const rect = section.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const sectionTop = rect.top + scrollTop;
+      window.scrollTo({ top: sectionTop, behavior: 'smooth' });
+    }
+  }
+  function footerOurGamesClick() {
+    // Your logic for Our Games button
+    goBackToInitialPage();
+  }
+  </script>
+
+    <!-- Social Icons -->
+    <div class="flex space-x-12 text-4xl text-white">
+      <a href="#" aria-label="Twitter" class="hover:text-sky-400"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="Facebook" class="hover:text-blue-600"><i class="fab fa-facebook"></i></a>
+      <a href="#" aria-label="LinkedIn" class="hover:text-blue-700"><i class="fab fa-linkedin"></i></a>
+      <a href="#" aria-label="Instagram" class="hover:text-pink-600"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="Apple" class="hover:text-gray-400"><i class="fab fa-apple"></i></a>
+      <a href="#" aria-label="Google Play" class="hover:text-green-600"><i class="fab fa-google-play"></i></a>
+      <a href="#" aria-label="YouTube" class="hover:text-red-600"><i class="fab fa-youtube"></i></a>
+    </div>
+
+   <!-- Policy Links -->
+<nav class="flex flex-wrap justify-center gap-8 text-base text-gray-400">
+</nav>
+
+
+    <!-- Copyright -->
+    <p class="flex flex-wrap justify-center gap-12 text-lg font-semibold tracking-wide">
+      Autofest Mobile ©
+    </p>
+
+  </div>
+</footer>
+
+  
+  
+
+
+
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" id="viewport-meta">
+
+<script>
+  // On page load
+  (function() {
+    const viewportMeta = document.getElementById('viewport-meta');
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+      // Override viewport for mobile devices to fixed width (desktop layout)
+      viewportMeta.setAttribute('content', 'width=1024, user-scalable=no');
+    }
+  })();
+</script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+  /* This disables pointer and scaling on .transition-all containers and all their children */
+  .disable-hover, .disable-hover * {
+    pointer-events: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+</style>
+
+<script>
+let CURRENTSTATE = 'normal';
+
+function isMobile() {
+  return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
+/* NEW: returns true while the icon stack is on screen */
+function isInitialPageActive() {
+  const init = document.getElementById('initial-page-icon-stack');
+  return init && init.classList.contains('loaded') &&
+         getComputedStyle(init).display !== 'none';
+}
+
+/* ──────────────────────────────────────────────────────────── */
+/* NEW: call this right after an icon finishes its overlay     */
+function applyLandscapeRule(onlyId = 'game-preview') {
+  if (isMobile() && window.innerWidth > window.innerHeight) {
+    /* mobile + landscape → keep only one section */
+    showOnlySectionInLandscape(onlyId);
+  } else {
+    /* anything else → make sure everything shows */
+    document.querySelectorAll('.page-section').forEach(sec => {
+      sec.style.display = '';
+    });
+    CURRENTSTATE = 'normal';
+    updateScreenshotHover();
+  }
+}
+/* ──────────────────────────────────────────────────────────── */
+
+function showOnlySectionInLandscape(onlyId) {
+  /* 0️⃣  Guard: do nothing if the icon stack is visible */
+  if (isInitialPageActive()) {
+    CURRENTSTATE = 'normal';
+    updateScreenshotHover();
+    return;
+  }
+
+  /* 1️⃣  Normal behaviour (your original logic) */
+  if (!isMobile()) {
+    document.querySelectorAll('.page-section').forEach(sec => { sec.style.display = ''; });
+    CURRENTSTATE = 'normal';
+    updateScreenshotHover();
+    return;
+  }
+
+  const inLandscape = window.innerWidth > window.innerHeight;
+  if (inLandscape) {
+    document.querySelectorAll('.page-section').forEach(sec => {
+      sec.style.display = sec.id === onlyId ? '' : 'none';
+    });
+    CURRENTSTATE = 'mobileonlyonesection';
+  } else {
+    document.querySelectorAll('.page-section').forEach(sec => { sec.style.display = ''; });
+    CURRENTSTATE = 'normal';
+  }
+  updateScreenshotHover();
+}
+
+/* Disable hover/click/transform on screenshots in single-section mode */
+function updateScreenshotHover() {
+  document.querySelectorAll('.transition-all').forEach(div => {
+    if (CURRENTSTATE === 'mobileonlyonesection') {
+      div.classList.add('disable-hover');
+    } else {
+      div.classList.remove('disable-hover');
+    }
+  });
+}
+
+/* Listen for orientation / resize / DOM ready */
+['DOMContentLoaded', 'resize', 'orientationchange'].forEach(evt =>
+  window.addEventListener(evt, () => showOnlySectionInLandscape('game-preview'))
+);
+</script>
+
+
+
+
+</div>
+
+
+</body>
+</html>
